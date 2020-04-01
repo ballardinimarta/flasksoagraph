@@ -1,4 +1,22 @@
 # For a flask application of the soachart with a timerangeselector
+## How to set up
+Start by cloning my repo.
+
+``` bash
+$ git clone https://github.com/ballardinimarta/soachart.git
+```
+Go to the repos directory
+
+``` bash
+$ cd soachart
+```
+
+Install requirements.txt
+
+``` bash
+$ pip install -r requirements.txt
+```
+
 ## Some path config
 At the last line in func.py that is under soachart/flaskapp/soa_chart_24/func.py you will se the line
 ```    
