@@ -3,12 +3,12 @@
 Start by cloning my repo.
 
 ``` bash
-$ git clone https://github.com/ballardinimarta/soachart.git
+$ git clone https://github.com/ballardinimarta/flasksoagraph.git
 ```
 Go to the repos directory
 
 ``` bash
-$ cd soachart
+$ cd flasksoagraph
 ```
 
 Install requirements.txt
@@ -18,7 +18,7 @@ $ pip install -r requirements.txt
 ```
 
 ## Some path config
-At the last line in func.py that is under soachart/flaskapp/soa_chart_24/func.py you will se the line
+At the last line in func.py that is under flasksoagraph/flaskapp/soa_chart_24/func.py you will se the line
 ```    
 fig.write_html("<path to your directory>/flasksoagraph/flaskapp/templates/soagraph.html")
 ```
