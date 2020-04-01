@@ -17,14 +17,6 @@ Install requirements.txt
 $ pip install -r requirements.txt
 ```
 
-## Some path config
-At the last line in func.py that is under flasksoagraph/flaskapp/soa_chart_24/func.py you will se the line
-```    
-fig.write_html("<path to your directory>/flasksoagraph/flaskapp/templates/soagraph.html")
-```
-
-And where it says <path to your directory> you have to insert the absolute path for your working directory, and leave the rest of the path untouched.
-
 ## How to host the Flask application on your localhost
 
 When you are in the working directory and have activated the venv go to terminal and set
