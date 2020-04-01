@@ -216,7 +216,7 @@ def get_plot(starttime, stoptime):
             "<b>SOA zones for .se</b><br><br>" +
             "<b>Server:</b> %{y}<br><br>" +
             "<b>Time:</b> %{customdata}<br><br>" +
-            "<b>Soa zone:</b> %{z}<br><br>"
+            "<b>Soa zone:</b> %{z:""}<br><br>"
             "<extra></extra>",
             colorbar=dict(
                 title='<b>SOA Zone<b>',
