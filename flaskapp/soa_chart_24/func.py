@@ -278,4 +278,4 @@ def get_plot(starttime, stoptime):
 
 
         # Write HTML file
-    fig.write_html("<path to your directory>/flasksoagraph/flaskapp/templates/soagraph.html")
+    fig.write_html("flaskapp/templates/soagraph.html")
