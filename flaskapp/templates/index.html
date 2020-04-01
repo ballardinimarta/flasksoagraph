@@ -1,0 +1,59 @@
+{% extends "layout.html"%}
+
+{% block title %}soagraph{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <link type="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+       {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <center><div class="container">
+    <h1>Hello!</h1>
+    <p>If you want to see the SOA (Start of Authority record) zones for the .se<br>
+      Secondary Name Servers as a heatmap, with a custom time range.</p>
+    <p>Then please use this application!</p>
+    <p>Please type in you measurement preferences</p>
+    <p>If you want to see the last 24 hours click the submit button without doing any changes</p>
+  <div class="row">
+  <div class='col-sm-4'></div>
+  <div class='col-sm-4'>
+    {{ wtf.quick_form(date_form) }}
+      </div>
+  <div class='col-sm-4'></div>
+    </div>
+  </div></center>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#startpick').datetimepicker(
+        { format: 'YYYY-MM-DD H:mm'}
+      );
+    });
+    $(function () {
+      $('#stoppick').datetimepicker(
+        { format: 'YYYY-MM-DD H:mm'}
+      );
+    });
+  </script>
+{% endblock %}
