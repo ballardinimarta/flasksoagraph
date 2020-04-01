@@ -1,3 +1,4 @@
+{% extends "layout.html"%}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -7,8 +8,11 @@
   <body>
     {% include 'soagraph.html'%}
     {% block content %}
-    <a href="https://github.com/ballardinimarta/flasksoagraph">The git hub repo for this website</a>
+    <center><div class=container>
+    <p>links for code</p>
+    <a href="https://github.com/ballardinimarta/flasksoagraph">The git hub repo for this website</a><br>
     <a href="https://github.com/ballardinimarta/soachart">The git hub repo for this graph only</a>
+  </div></center>
     {% endblock %}
   </body>
 </html>
