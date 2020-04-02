@@ -27,18 +27,19 @@ class dateform(Form):
 def home():
     error = None
     date_form = dateform()
+    if not date_form.validate_on_submit():
+            get_plot(defstarttime, now_time)
     if date_form.validate_on_submit():
         if date_form.start.data == date_form.stop.data:
             error ='starttime and stoptime cannot be the same time'
         elif date_form.start.data > date_form.stop.data:
             error ='the stoptime has to be later than the starttime'
-        elif date_form.stop.data > now_time:
+        elif date_form.stop.data >= now_time:
             error ='stoptime cannot be later than the current date and time'
         elif date_form.stop.data-date_form.start.data>timedelta(hours=24):
             error ='the measurement cannot be larger than 24 hours'
         else:
             get_plot(date_form.start.data, date_form.stop.data)
-            return redirect(url_for('home'))
 
     return render_template('index.html', date_form=date_form, error=error)
 
