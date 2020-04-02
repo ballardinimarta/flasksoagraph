@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block content %}
-
 {% if error %}
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
@@ -24,20 +23,22 @@
   {% endwith %}
 
   <center><div class="container">
-    <h1>Hello!</h1>
-    <p>If you want to see the SOA (Start of Authority record) zones for the .se<br>
-      Secondary Name Servers as a heatmap, with a custom time range.</p>
-    <p>Then please use this application!</p>
-    <p>Please type in you measurement preferences</p>
-    <p>If you want to see the last 24 hours click the submit button without doing any changes</p>
+    <h2>Hello!</h2>
   <div class="row">
-  <div class='col-sm-4'></div>
-  <div class='col-sm-4'>
-    {{ wtf.quick_form(date_form) }}
-      </div>
-  <div class='col-sm-4'></div>
+    <div class='col-sm-2'>
+      <small><p>Please type in your measurement preferences.</p></small>
+      {{ wtf.quick_form(date_form) }}
     </div>
+  <div class="col-sm-10">
+      {% include 'soagraph.html'%}
+  </div>
+  </div>
   </div></center>
+  <center><div class=container>
+  <small><p>Graph made with plotly python library.</p>
+  <a href="https://github.com/ballardinimarta/flasksoagraph">The GitHub repo for this website</a><br>
+  <a href="https://github.com/ballardinimarta/soachart">The GitHub repo for this graph only</a></small>
+</div></center>
 {% endblock %}
 
 {% block scripts %}

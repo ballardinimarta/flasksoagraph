@@ -8,6 +8,8 @@ from wtforms.fields import DateTimeField, SubmitField
 app = Flask(__name__)
 Bootstrap(app)
 app.secret_key = 'SHH!'
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 
 now_time = datetime.now()
 defstarttime = datetime.now() - timedelta(hours=24)
@@ -36,14 +38,9 @@ def home():
             error ='the measurement cannot be larger than 24 hours'
         else:
             get_plot(date_form.start.data, date_form.stop.data)
-            return redirect(url_for('soa'))
+            return redirect(url_for('home'))
 
     return render_template('index.html', date_form=date_form, error=error)
-
-
-@app.route("/soa")
-def soa():
-    return render_template('soa.html')
 
 from soa_chart_24.func import get_plot
 
