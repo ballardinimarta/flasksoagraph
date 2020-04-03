@@ -67,6 +67,7 @@ def get_plot(starttime, stoptime):
             l_soa = []
             l_time = []
             l_dt = []
+            l_hover = []
             count = 0
             while count < len(results)-1:
                 my_error = DnsResult(results[count], on_error=DnsResult.ACTION_IGNORE)
@@ -74,15 +75,16 @@ def get_plot(starttime, stoptime):
                     timestamp = results[count]['timestamp']
                     dt = datetime.datetime.fromtimestamp(timestamp)
                     dt = dt.strftime("%m/%d/%Y , %H:%M:%S")
-                    soa_serial = results[count]['result']['answers'][0]['SERIAL']
-                    soa_serial = str(soa_serial)
+                    og_soa_serial = results[count]['result']['answers'][0]['SERIAL']
+                    soa_serial = str(og_soa_serial)
                     soa_serial = datetime.datetime.strptime(soa_serial, "%Y%m%d%H")
                     soa_serial = datetime.datetime.timestamp(soa_serial)
                     l_soa.append(soa_serial)
                     l_time.append(timestamp)
                     l_dt.append(dt)
+                    l_hover.append(og_soa_serial)
                 count += 1
-            return l_soa, l_time, l_dt
+            return l_soa, l_time, l_dt, l_hover
 
 
     # Create a time list, soa list and datetime list for each measurement
@@ -101,7 +103,9 @@ def get_plot(starttime, stoptime):
     all_soa_list = [a[0], b[0], c[0], f[0], g[0], i[0], m[0], x[0], y[0], z[0]]
     all_time_list = [a[1], b[1], c[1], f[1], g[1], i[1], m[1], x[1], y[1], z[1]]
     all_dt_list = [a[2], b[2], c[2], f[2], g[2], i[2], m[2], x[2], y[2], z[2]]
+    hover_list = [a[3], b[3], c[3], f[3], g[3], i[3], m[3], x[3], y[3], z[3]]
     all_dt_list.sort()
+    hover_list.sort()
 
 
     # Setting average datetime values
@@ -243,11 +247,13 @@ def get_plot(starttime, stoptime):
     z = all_soa_list
     time = timelist
     custom = all_dt_list
+    text = hover_list
 
     fig = go.Figure(data=go.Heatmap(
             z=z,
             x=time,
             y=servers,
+            text=text,
             customdata=custom,
             ygap=10,
             colorscale=colorscale,
@@ -255,7 +261,7 @@ def get_plot(starttime, stoptime):
             "<b>SOA zones for .se</b><br><br>" +
             "<b>Server:</b> %{y}<br><br>" +
             "<b>Time:</b> %{customdata}<br><br>" +
-            "<b>Soa zone:</b> %{z:""}<br><br>"
+            "<b>Soa zone:</b> %{text}<br><br>"
             "<extra></extra>",
             colorbar=dict(
                 title='<b>SOA Zone<b>',
