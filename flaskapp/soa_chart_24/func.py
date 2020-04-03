@@ -128,7 +128,7 @@ def get_plot(starttime, stoptime):
     # colorscale
 
     colorscalenums = []
-    for i in np.arange(0, 1, 0.03333333):
+    for i in np.arange(0, 1, 0.02):
         colorscalenums.append(i)
 
     colorscale = [
@@ -191,8 +191,47 @@ def get_plot(starttime, stoptime):
         [colorscalenums[28], '#ebd060'],
         [colorscalenums[29], '#ebd060'],
         [colorscalenums[29], '#d1da59'],
-        [1, '#d1da59'],
-
+        [colorscalenums[30], '#d1da59'],
+        [colorscalenums[30], '#52d79f'],
+        [colorscalenums[31], '#52d79f'],
+        [colorscalenums[31], '#704dfb'],
+        [colorscalenums[32], '#704dfb'],
+        [colorscalenums[32], '#75dd45'],
+        [colorscalenums[33], '#75dd45'],
+        [colorscalenums[33], '#5fae4f'],
+        [colorscalenums[34], '#5fae4f'],
+        [colorscalenums[34], '#b3e015'],
+        [colorscalenums[35], '#b3e015'],
+        [colorscalenums[35], '#558e14'],
+        [colorscalenums[36], '#558e14'],
+        [colorscalenums[36], '#db0eed'],
+        [colorscalenums[37], '#db0eed'],
+        [colorscalenums[37], '#eb43a3'],
+        [colorscalenums[38], '#eb43a3'],
+        [colorscalenums[38], '#936e43'],
+        [colorscalenums[39], '#936e43'],
+        [colorscalenums[39], '#4e1ad9'],
+        [colorscalenums[40], '#4e1ad9'],
+        [colorscalenums[40], '#534118'],
+        [colorscalenums[41], '#534118'],
+        [colorscalenums[41], '#cb43a9'],
+        [colorscalenums[42], '#cb43a9'],
+        [colorscalenums[42], '#e92228'],
+        [colorscalenums[43], '#e92228'],
+        [colorscalenums[43], '#4431f6'],
+        [colorscalenums[44], '#4431f6'],
+        [colorscalenums[44], '#3821a6'],
+        [colorscalenums[45], '#3821a6'],
+        [colorscalenums[45], '#eecb0f'],
+        [colorscalenums[46], '#eecb0f'],
+        [colorscalenums[46], '#7a2057'],
+        [colorscalenums[47], '#7a2057'],
+        [colorscalenums[47], '#03ed22'],
+        [colorscalenums[48], '#03ed22'],
+        [colorscalenums[48], '#c2bd40'],
+        [colorscalenums[49], '#c2bd40'],
+        [colorscalenums[49], '#c24ddf'],
+        [1, '#c24ddf']
     ]
     # Creating plot, making a custom hovertemplate for the hovertext and editing the colorbar
         # Sorting soa values
@@ -239,29 +278,7 @@ def get_plot(starttime, stoptime):
             plot_bgcolor='white',
             xaxis=dict(
                 title="Time",
-                rangeslider=dict(visible=True, thickness=0.10),
-                rangeselector=dict(
-                    buttons=list([
-                        dict(count=30,
-                             label="30 min",
-                             step="minute",
-                             stepmode="backward"),
-                        dict(count=1,
-                             label="1 hour",
-                             step="hour",
-                             stepmode="backward"),
-                        dict(count=2,
-                             label="2 hour",
-                             step="hour",
-                             stepmode="backward"),
-                        dict(count=3,
-                             label="3 hour",
-                             step="hour",
-                             stepmode="backward"),
-                        dict(step="all")
-                    ])
-                ),
-            ),
+                rangeslider=dict(visible=True, thickness=0.10)),
             yaxis=dict(
                 title="Server",
                 autorange='reversed'

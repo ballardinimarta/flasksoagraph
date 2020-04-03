@@ -1,13 +1,20 @@
 {% extends "layout.html"%}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}soagraph{% endblock %}
 
 {% block head %}
   {{ super() }}
   <link type="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+  <style>
+  body{
+    margin-top: 60px;
+  }
+  </style>
 {% endblock %}
 
 {% block content %}
+
 {% if error %}
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
@@ -21,18 +28,54 @@
       </ul>
     {% endif %}
   {% endwith %}
+
   <body style="background-color:WhiteSmoke;">
-  <center><div class="container">
-    <h1>Hello!</h1>  <div class="row">
-    <div class='col-sm-2'>
-      <small><p>Please type in your measurement preferences.</p></small>
-      {{ wtf.quick_form(date_form) }}
+  <div class="container">
+    <div class="row">
+    <div class='col-sm-1'>
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#basicExampleModal">
+  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Timerange</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small><p>Please type in your measurement preferences.</p></small>
+        {{ wtf.quick_form(date_form) }}
+      </div>
+      <div class="modal-footer">
+      </div>
     </div>
-  <div class="col-sm-10">
+  </div>
+</div>
+</div>
+<div class="col-sm-4">
+  {{ wtf.quick_form(button_form)}}
+  </div>
+</div>
+</div>
+</div>
+
+<!-- soagraph -->
+<div class="container">
+<div class="row">
+  <div class="col">
       {% include 'soagraph.html'%}
   </div>
   </div>
-  </div></center>
+  </div>
+
+<!-- links -->
   <center><div class=container>
   <small><p>Graph made with plotly python library.</p>
   <a href="https://github.com/ballardinimarta/flasksoagraph">The GitHub repo for this website</a><br>
