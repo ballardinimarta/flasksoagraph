@@ -2,7 +2,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta
 from flask import render_template, redirect, url_for, flash, request
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.fields import DateTimeField, SubmitField
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ fortyeightstart = datetime.now() - timedelta(hours=48)
 
 
 
-class dateform(Form):
+class dateform(FlaskForm):
     start = DateTimeField(id = 'startpick',  format = '%Y-%m-%d %H:%M',
                             default = twentyfourstart)
     stop =DateTimeField(id = 'stoppick',  format = '%Y-%m-%d %H:%M',
