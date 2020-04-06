@@ -48,10 +48,10 @@ def home():
             error ='starttime and stoptime cannot be the same time'
         elif date_form.start.data > date_form.stop.data:
             error ='the stoptime has to be later than the starttime'
-        elif date_form.stop.data >= now_time:
+        elif date_form.stop.data > datetime.now():
             error ='stoptime cannot be later than the current date and time'
-        elif date_form.stop.data-date_form.start.data>timedelta(hours=24):
-            error ='the measurement cannot be larger than 24 hours'
+        elif date_form.stop.data-date_form.start.data>timedelta(hours=50):
+            error ='the measurement cannot be larger than 50 hours'
         else:
             get_plot(date_form.start.data, date_form.stop.data)
     if button_form.validate_on_submit():
