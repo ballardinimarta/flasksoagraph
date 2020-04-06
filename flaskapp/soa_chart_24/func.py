@@ -121,6 +121,9 @@ def get_plot(starttime, stoptime):
     for item in all_soa_list:
         unique = np.unique(item)
         unique = list(unique)
+    if len(unique) >= 40:
+        unique=unique[0:-1:2]
+
 
     tickvals = unique
     ticktext = []
@@ -274,6 +277,8 @@ def get_plot(starttime, stoptime):
                 tickmode='array',
                 tickvals=tickvals,
                 ticktext=ticktext,
+                lenmode='pixels',
+                len=300,
             )
         )
         )
