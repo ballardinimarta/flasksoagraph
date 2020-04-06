@@ -33,7 +33,6 @@ class dateform(Form):
 def home():
     error = None
     date_form = dateform()
-    button_form = buttonform()
     if not date_form.validate_on_submit():
             get_plot(fortyeightstart, now_time)
     if date_form.validate_on_submit():
