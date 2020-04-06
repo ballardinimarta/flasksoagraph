@@ -26,14 +26,7 @@ class dateform(Form):
                             default = datetime.now)
     submit = SubmitField('Submit')
 
-class buttonform(Form):
-    three = SubmitField('3 hours')
 
-    twelve = SubmitField('12 hours')
-
-    twentyfour = SubmitField('24 hours')
-
-    fortyeight = SubmitField('48 hours')
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -42,7 +35,7 @@ def home():
     date_form = dateform()
     button_form = buttonform()
     if not date_form.validate_on_submit():
-            get_plot(twentyfourstart, now_time)
+            get_plot(fortyeightstart, now_time)
     if date_form.validate_on_submit():
         if date_form.start.data == date_form.stop.data:
             error ='starttime and stoptime cannot be the same time'
@@ -54,17 +47,9 @@ def home():
             error ='the measurement cannot be larger than 50 hours'
         else:
             get_plot(date_form.start.data, date_form.stop.data)
-    if button_form.validate_on_submit():
-        if button_form.three.data:
-            get_plot(threestart, now_time)
-        if button_form.twelve.data:
-            get_plot(twelvestart, now_time)
-        if button_form.twentyfour.data:
-            get_plot(twentyfourstart, now_time)
-        if button_form.fortyeight.data:
-            get_plot(fortyeightstart, now_time)
 
-    return render_template('index.html', date_form=date_form, button_form=button_form, error=error)
+
+    return render_template('index.html', date_form=date_form, error=error)
 
 from soa_chart_24.func import get_plot
 

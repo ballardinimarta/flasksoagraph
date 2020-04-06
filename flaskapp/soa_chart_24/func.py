@@ -280,11 +280,31 @@ def get_plot(starttime, stoptime):
         # Updating some layout values
     fig.update_layout(
             template="ggplot2",
-            title="SOA zones for .se secondary name servers from {} to {}".format(starttime,stoptime),
+            title="SOA zones for .se secondary name servers from {0:%Y-%m-%d %H:%M:%S} to {1:%Y-%m-%d %H:%M:%S}".format(starttime,stoptime),
             plot_bgcolor='white',
             xaxis=dict(
                 title="Time",
-                rangeslider=dict(visible=True, thickness=0.10)),
+                rangeslider=dict(visible=True, thickness=0.10),
+                rangeselector=dict(
+                buttons=list([
+                    dict(count=3,
+                         label="3 hours",
+                         step="hour",
+                         stepmode="backward"),
+                    dict(count=12,
+                         label="12 hours",
+                         step="hour",
+                         stepmode="backward"),
+                    dict(count=24,
+                         label="24 hours",
+                         step="hour",
+                         stepmode="todate"),
+                    dict(count=48,
+                         label="48 hours",
+                         step="hour",
+                         stepmode="backward"),
+                    dict(step="all"),
+            ]))),
             yaxis=dict(
                 title="Server",
                 autorange='reversed'
