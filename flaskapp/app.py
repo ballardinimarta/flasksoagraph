@@ -7,7 +7,8 @@ from wtforms.fields import SubmitField
 from wtforms.fields.html5 import DateTimeLocalField
 
 app = Flask(__name__)
-Bootstrap(app)
+bootstrap = Bootstrap(app)
+
 app.secret_key = 'SHH!'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -15,7 +16,6 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 now_time = datetime.now()
 twentyfourstart = datetime.now() - timedelta(hours=24)
 fortyeightstart = datetime.now() - timedelta(hours=48)
-
 
 
 class dateform(FlaskForm):
