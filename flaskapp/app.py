@@ -3,7 +3,8 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta
 from flask import render_template, redirect, url_for, flash, request
 from flask_wtf import FlaskForm
-from wtforms.fields import DateTimeField, SubmitField
+from wtforms.fields import SubmitField
+from wtforms.fields.html5 import DateTimeLocalField
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -12,17 +13,15 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
 now_time = datetime.now()
-threestart = datetime.now() - timedelta(hours=3)
-twelvestart = datetime.now() - timedelta(hours=12)
 twentyfourstart = datetime.now() - timedelta(hours=24)
 fortyeightstart = datetime.now() - timedelta(hours=48)
 
 
 
 class dateform(FlaskForm):
-    start = DateTimeField(id = 'startpick',  format = '%Y-%m-%d %H:%M',
+    start = DateTimeLocalField(id = 'startpick', format = '%Y-%m-%dT%H:%M',
                             default = twentyfourstart)
-    stop =DateTimeField(id = 'stoppick',  format = '%Y-%m-%d %H:%M',
+    stop =DateTimeLocalField(id = 'stoppick', format = '%Y-%m-%dT%H:%M',
                             default = datetime.now)
     submit = SubmitField('Submit')
 
