@@ -3,8 +3,7 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta
 from flask import render_template, redirect, url_for, flash, request
 from flask_wtf import FlaskForm
-from wtforms.fields import SubmitField
-from wtforms.fields.html5 import DateTimeLocalField
+from wtforms.fields import SubmitField, DateTimeField
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -15,11 +14,10 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 now_time = datetime.now
 
-
 class dateform(FlaskForm):
-    start = DateTimeLocalField(id = 'startpick', format = '%Y-%m-%dT%H:%M',
+    start = DateTimeField(id = 'startpick', format = '%Y-%m-%d %H:%M',
                             default = now_time() - timedelta(hours=24))
-    stop =DateTimeLocalField(id = 'stoppick', format = '%Y-%m-%dT%H:%M',
+    stop =DateTimeField(id = 'stoppick', format = '%Y-%m-%d %H:%M',
                             default = datetime.now)
     submit = SubmitField('Submit')
 
@@ -50,4 +48,4 @@ def home():
 from soa_chart_24.func import get_plot
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
