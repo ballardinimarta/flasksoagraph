@@ -13,14 +13,12 @@ app.secret_key = 'SHH!'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
-now_time = datetime.now()
-twentyfourstart = datetime.now() - timedelta(hours=24)
-fortyeightstart = datetime.now() - timedelta(hours=48)
+now_time = datetime.now
 
 
 class dateform(FlaskForm):
     start = DateTimeLocalField(id = 'startpick', format = '%Y-%m-%dT%H:%M',
-                            default = twentyfourstart)
+                            default = now_time() - timedelta(hours=24))
     stop =DateTimeLocalField(id = 'stoppick', format = '%Y-%m-%dT%H:%M',
                             default = datetime.now)
     submit = SubmitField('Submit')
@@ -33,13 +31,13 @@ def home():
     error = None
     date_form = dateform()
     if not date_form.validate_on_submit():
-            get_plot(fortyeightstart, now_time)
+        get_plot(now_time() - timedelta(hours=48), now_time())
     if date_form.validate_on_submit():
         if date_form.start.data == date_form.stop.data:
             error ='starttime and stoptime cannot be the same time'
         elif date_form.start.data > date_form.stop.data:
             error ='the stoptime has to be later than the starttime'
-        elif date_form.stop.data > datetime.now():
+        elif date_form.stop.data > now_time():
             error ='stoptime cannot be later than the current date and time'
         elif date_form.stop.data-date_form.start.data>timedelta(hours=50):
             error ='the measurement cannot be larger than 50 hours'
