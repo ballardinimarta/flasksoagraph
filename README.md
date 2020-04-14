@@ -24,6 +24,10 @@ When you are in the working directory and have activated the venv go to terminal
 ``` bash
 $ export FLASK_APP=flaskapp/app.py
 ```
+or on windows 
+``` bash
+$ set FLASK_APP=flaskapp/app.py
+```
 ## How to run
 
 and then you just do a flask run to connect to the server
