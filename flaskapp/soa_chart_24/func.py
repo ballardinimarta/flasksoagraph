@@ -3,6 +3,7 @@ from ripe.atlas.sagan import DnsResult
 import datetime
 import numpy as np
 import plotly.graph_objects as go
+import arrow
 
 
 def get_plot(starttime, stoptime):
@@ -130,6 +131,9 @@ def get_plot(starttime, stoptime):
         time = datetime.datetime.fromtimestamp(bla)
         time = datetime.datetime.strftime(time, '%Y%m%d%H')
         ticktext.append(time)
+
+    #title offsets
+    offset = arrow.now('local').utcoffset()
 
     # colorscale
 
@@ -281,10 +285,11 @@ def get_plot(starttime, stoptime):
             )
         )
         )
-        # Updating some layout values
+
+    # Updating some layout values
     fig.update_layout(
             template="ggplot2",
-            title="SOA zones for .se secondary name servers from {0:%Y-%m-%d %H:%M:%S} to {1:%Y-%m-%d %H:%M:%S}".format(starttime,stoptime),
+            title="SOA zones for .se secondary name servers from {0:%Y-%m-%d, %H:%M} to {1:%Y-%m-%d, %H:%M}".format(time[0], time[-1]),
             plot_bgcolor='white',
             xaxis=dict(
                 title="Time",

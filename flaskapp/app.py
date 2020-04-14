@@ -1,24 +1,61 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from datetime import datetime, timedelta
-from flask import render_template, redirect, url_for, flash, request
+from datetime import datetime, timedelta, date
+from flask import render_template, redirect, url_for, flash, request, current_app
 from flask_wtf import FlaskForm
+from wtforms.widgets import html_params, HTMLString
 from wtforms.fields import SubmitField, DateTimeField
+import arrow
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.secret_key = 'SHH!'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["TIMEZONE"] = 'local'
+
+now_time = arrow.now
+today = date.today
+offset = arrow.now('local').utcoffset()
+dtnow = datetime.now
 
 
-now_time = datetime.now
+class DateTimeWidget:
+    """Widget for DateTimeFields using separate date and time inputs."""
+    def __call__(self, field, **kwargs):
+        id = kwargs.pop('id', field.id)
+        date = time = ''
+        if field.data:
+            dt = arrow.get(field.data).to(current_app.config['TIMEZONE'])
+            date = dt.format('YYYY-MM-DD')
+            time = dt.format('HH:mm')
+        date_params = html_params(name=field.name, id=id + '-date', value=date, **kwargs)
+        time_params = html_params(name=field.name, id=id + '-time', value=time, **kwargs)
+        return HTMLString('<input type="date" {}/><input type="time" {}/>'.format(date_params, time_params))
+
+
+class DateTimeLocalField(DateTimeField):
+    """
+    DateTimeField that assumes input is in app-configured timezone and converts
+    to UTC for further processing/storage.
+    """
+    widget = DateTimeWidget()
+
+
+    def process_formdata(self, valuelist):
+        current_app.logger.debug(valuelist)
+        if valuelist:
+            date_str = ' '.join(valuelist)
+            try:
+                self.data = arrow.get(date_str).replace(tzinfo=current_app.config['TIMEZONE']).to('UTC')
+            except arrow.parser.ParserError as e:
+                current_app.logger.warn('Invalid datetime value submitted: %s', e)
+                raise ValueError('Not a valid datetime value. Looking for YYYY-MM-DD HH:mm.')
+
 
 class dateform(FlaskForm):
-    start = DateTimeField(id = 'startpick', format = '%Y-%m-%d %H:%M',
-                            default = now_time() - timedelta(hours=24))
-    stop =DateTimeField(id = 'stoppick', format = '%Y-%m-%d %H:%M',
-                            default = datetime.now)
+    start = DateTimeLocalField(id = 'startpick', default = now_time)
+    stop =DateTimeLocalField(id = 'stoppick', default = now_time)
     submit = SubmitField('Submit')
 
 
@@ -27,16 +64,15 @@ class dateform(FlaskForm):
 @app.route("/", methods=['POST', 'GET'])
 def home():
     error = None
+
     date_form = dateform()
     if not date_form.validate_on_submit():
-        get_plot(now_time() - timedelta(hours=48), now_time())
+        get_plot(dtnow() - timedelta(hours=50), dtnow())
     if date_form.validate_on_submit():
         if date_form.start.data == date_form.stop.data:
             error ='starttime and stoptime cannot be the same time'
         elif date_form.start.data > date_form.stop.data:
             error ='the stoptime has to be later than the starttime'
-        elif date_form.stop.data > now_time():
-            error ='stoptime cannot be later than the current date and time'
         elif date_form.stop.data-date_form.start.data>timedelta(hours=50):
             error ='the measurement cannot be larger than 50 hours'
         else:
