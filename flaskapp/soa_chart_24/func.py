@@ -132,11 +132,8 @@ def get_plot(starttime, stoptime):
         time = datetime.datetime.strftime(time, '%Y%m%d%H')
         ticktext.append(time)
 
-    #title offsets
-    offset = arrow.now('local').utcoffset()
 
     # colorscale
-
     colorscalenums = []
     for i in np.arange(0, 1, 0.02):
         colorscalenums.append(i)
