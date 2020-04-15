@@ -7,19 +7,22 @@ from wtforms.widgets import html_params, HTMLString
 from wtforms.fields import SubmitField, DateTimeField
 import arrow
 
+#Define app
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
+# Config keys
 app.secret_key = 'SHH!'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["TIMEZONE"] = 'local'
 
+# Some time variables
 now_time = arrow.now
 today = date.today
 offset = arrow.now('local').utcoffset()
 dtnow = datetime.now
 
-
+# The widget for the DateTimeLocalField from gist https://gist.github.com/tachyondecay/2c1462eed197f879f0bf
 class DateTimeWidget:
     """Widget for DateTimeFields using separate date and time inputs."""
     def __call__(self, field, **kwargs):
@@ -33,14 +36,13 @@ class DateTimeWidget:
         time_params = html_params(name=field.name, id=id + '-time', value=time, **kwargs)
         return HTMLString('<input type="date" {}/><input type="time" {}/>'.format(date_params, time_params))
 
-
+# The custom field found from gist https://gist.github.com/tachyondecay/2c1462eed197f879f0bf
 class DateTimeLocalField(DateTimeField):
     """
     DateTimeField that assumes input is in app-configured timezone and converts
     to UTC for further processing/storage.
     """
     widget = DateTimeWidget()
-
 
     def process_formdata(self, valuelist):
         current_app.logger.debug(valuelist)
@@ -52,19 +54,16 @@ class DateTimeLocalField(DateTimeField):
                 current_app.logger.warn('Invalid datetime value submitted: %s', e)
                 raise ValueError('Not a valid datetime value. Looking for YYYY-MM-DD HH:mm.')
 
-
+# Form for the inputs
 class dateform(FlaskForm):
     start = DateTimeLocalField(id = 'startpick', default = now_time)
     stop =DateTimeLocalField(id = 'stoppick', default = now_time)
     submit = SubmitField('Submit')
 
-
-
-
+# Route for Homepage
 @app.route("/", methods=['POST', 'GET'])
 def home():
     error = None
-
     date_form = dateform()
     if not date_form.validate_on_submit():
         get_plot(dtnow() - timedelta(hours=50), dtnow())
@@ -81,6 +80,7 @@ def home():
 
     return render_template('index.html', date_form=date_form, error=error)
 
+# Import statement after route to avoid circular imports
 from soa_chart_24.func import get_plot
 
 if __name__ == "__main__":
