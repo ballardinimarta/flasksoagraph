@@ -105,7 +105,6 @@ def get_plot(starttime, stoptime):
     all_dt_list = [a[2], b[2], c[2], f[2], g[2], i[2], m[2], x[2], y[2], z[2]]
     hover_list = [a[3], b[3], c[3], f[3], g[3], i[3], m[3], x[3], y[3], z[3]]
     all_dt_list.sort()
-    hover_list.sort()
 
 
     # Setting average datetime values
