@@ -66,7 +66,7 @@ def home():
     error = None
     date_form = dateform()
     if not date_form.validate_on_submit():
-        get_plot(dtnow() - timedelta(hours=50), dtnow())
+        get_plot(dtnow() - timedelta(hours=26), dtnow())
     if date_form.validate_on_submit():
         if date_form.start.data == date_form.stop.data:
             error ='starttime and stoptime cannot be the same time'
@@ -84,4 +84,4 @@ def home():
 from soa_chart_24.func import get_plot
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(host = '0.0.0.0', port = 5000, debug=False)
