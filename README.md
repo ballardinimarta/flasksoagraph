@@ -57,7 +57,7 @@ $ docker build --tag soagraph .
 ```
 Then run your container
 ``` bash
-$ docker run --name soagraph-app -p 5000:5000 soagraph-app
+$ docker run --name soagraph -p 5000:5000 soagraph
 ```
 
 _Then the application should be visible at http://127.0.0.1:5000/ ._
