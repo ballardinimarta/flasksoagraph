@@ -3,3 +3,4 @@ __pycache__
 flasksoagraph
 flaskapp/templates/soagraph.html
 .idea
+.pytest_cache
